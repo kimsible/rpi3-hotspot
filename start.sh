@@ -13,8 +13,12 @@ sudo cp ../packages/*.deb ./var/cache/apt/archives
 # Autologin pi
 sudo sed -i 's/ExecStart=-\/sbin\/agetty --noclear %I $TERM/ExecStart=-\/sbin\/agetty --noclear -a pi %I $TERM/g' ./lib/systemd/system/getty@.service
     
-# Keyboard fr
-sudo sed -i 's/XKBLAYOUT="gb"/XKBLAYOUT="fr"/g' ./etc/default/keyboard
+# Set keyboard mapping
+case "$@" in
+ '') lang='gb' ;;
+ *) lang="$@" ;;
+esac
+sudo sed -i 's/XKBLAYOUT=".*"/XKBLAYOUT="'$lang'"/g' ./etc/default/keyboard
 
 # Copy interfaces config
 sudo cp ../config/interfaces ./etc/network/interfaces

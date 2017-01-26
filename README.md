@@ -8,7 +8,7 @@ This is an install script to prepare a raspbian-jessie-lite image and configure 
     
     $ df -h
     
-if your sdard is mounted 
+if your sdcard is mounted 
     
     $ sudo umount /dev/sdX
 
@@ -41,11 +41,15 @@ Optionally you may also edit IPs in `config/interfaces` and `config/dnsmasq.conf
 
 ## 4. Run script
 
-    sh start.sh
+    $ sh start.sh
+
+To re-mapping the keyboard give the two letter code for your country as argument : 
+
+    $ sh start.sh fr
 
 ## Unmount sdcard
 
-    sudo umount ./root
+    $ sudo umount ./root
 
 ## Sources
 
