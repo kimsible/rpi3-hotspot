@@ -45,7 +45,7 @@ Optionally you may also edit IPs in `config/interfaces` and `config/dnsmasq.conf
 
 ## Unmount sdcard
 
-    sudo umount sdcard
+    sudo umount ./root
 
 ## Sources
 
