@@ -41,7 +41,7 @@ Optionally you may also edit IPs in `config/interfaces` and `config/dnsmasq.conf
 
 ## 4. Run script
 
-    sudo sh start.sh
+    sh start.sh
 
 ## Unmount sdcard
 

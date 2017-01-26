@@ -8,16 +8,16 @@ wget -P ./packages -nc `cat sources.list`
 cd ./root
 
 # Copy dependencies packages
-cp ../packages/*.deb ./var/cache/apt/archives
+sudo cp ../packages/*.deb ./var/cache/apt/archives
 
 # Autologin pi
-sed -i 's/ExecStart=-\/sbin\/agetty --noclear %I $TERM/ExecStart=-\/sbin\/agetty --noclear -a pi %I $TERM/g' ./lib/systemd/system/getty@.service
+sudo sed -i 's/ExecStart=-\/sbin\/agetty --noclear %I $TERM/ExecStart=-\/sbin\/agetty --noclear -a pi %I $TERM/g' ./lib/systemd/system/getty@.service
     
 # Keyboard fr
-sed -i 's/XKBLAYOUT="gb"/XKBLAYOUT="fr"/g' ./etc/default/keyboard
+sudo sed -i 's/XKBLAYOUT="gb"/XKBLAYOUT="fr"/g' ./etc/default/keyboard
 
 # Copy interfaces config
-cp ../config/interfaces ./etc/network/interfaces
+sudo cp ../config/interfaces ./etc/network/interfaces
 
 # Copy hostapd config
 sudo mkdir -p ./etc/hostapd
@@ -34,3 +34,4 @@ sudo cp ../config/cron-startup.sh ./opt/cron-startup.sh
 sudo chmod a+x ./opt/cron-startup.sh
 sudo sed -i "s/^exit 0/sh \/opt\/cron-startup\.sh\n\nexit 0/g" ./etc/rc.local
 
+echo "Done"
