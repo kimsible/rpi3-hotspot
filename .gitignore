@@ -1,3 +1,5 @@
-packages
 root/*
 !.gitkeep
+*.img
+raspbian_lite_latest
+openvpn-server.*

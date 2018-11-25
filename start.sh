@@ -1,14 +1,7 @@
 #!/bin/sh
 
-# Cache dnsmasq and hostapd dependencies
-mkdir -p packages
-wget -P ./packages -nc `cat sources.list`
-
 # Move to mount sdcard point
 cd ./root
-
-# Copy dependencies packages
-sudo cp ../packages/*.deb ./var/cache/apt/archives
 
 # Autologin pi
 sudo sed -i 's/ExecStart=-\/sbin\/agetty --noclear %I $TERM/ExecStart=-\/sbin\/agetty --noclear -a pi %I $TERM/g' ./lib/systemd/system/getty@.service
@@ -29,6 +22,16 @@ sudo cp ../config/hostapd.conf ./etc/hostapd/hostapd.conf
 
 # Copy dnsmasq config
 sudo cp ../config/dnsmasq.conf ./etc/dnsmasq.conf.new
+
+# Copy openvpn server and auth config
+if [ -f "../config/openvpn-server.conf" ] && [ -f "../config/openvpn-server.auth" ]
+then
+
+  sudo mkdir -p ./etc/openvpn
+  sudo cp ../config/openvpn-server.conf ./etc/openvpn/server.conf
+  sudo cp ../config/openvpn-server.auth ./etc/openvpn/server.auth
+
+fi
 
 # Accept ipv4_forward
 sudo sed -i 's/#net\.ipv4\.ip_forward=1/net\.ipv4\.ip_forward=1/g' ./etc/sysctl.conf

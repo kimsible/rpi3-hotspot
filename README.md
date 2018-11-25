@@ -1,8 +1,16 @@
 # Raspberry Pi 3 Hotspot Install
 
-This is an install script to prepare a raspbian-jessie-lite image and configure your Raspberry Pi 3 as a hotspot.
+This is an install script to prepare a raspbian-lite image and configure your Raspberry Pi 3 as a hotspot.
 
-## 1. Flash sdcard
+
+## 1. Download latest raspbian lite
+
+    $ wget https://downloads.raspberrypi.org/raspbian_lite_latest
+
+    $ unzip raspbian_lite_latest
+
+
+## 2. Flash sdcard
 
 ### Check what volume /dev/sdX is already mounted and used
     
@@ -12,18 +20,18 @@ if your sdcard is mounted
     
     $ sudo umount /dev/sdX
 
-### Format and copy raspbian-jessie-lite.img to sdcard
+### Format and copy raspbian-*-lite.img to sdcard
 
     $ sudo dd if=/dev/zero of=/dev/sdX bs=1M count=8
-    $ sudo dd bs=4M if=raspbian-jessie-lite.img of=/dev/sdX 
+    $ sudo dd bs=4M if=*raspbian-*-lite.img of=/dev/sdX
 
-## 2. Mount sdcard on ./root
+## 3. Mount sdcard on ./root
 
-    $ sudo mount -v -o offset=70254592 -t ext4 /dev/sda ./root
+    $ sudo mount -v -o offset=70254592 -t ext4 /dev/sdX ./root
 
 If `offset` does not match, you can get it with this command :
     
-    $ sudo fdisk -l /dev/sdX    
+    $ sudo fdisk -l /dev/sdX
 
 It should return something like that : 
 
@@ -33,13 +41,20 @@ It should return something like that :
 
 So `offset=512*137216`.
 
-## 3. Config SSID and password
+## 4. Config SSID and password
 
 Edit SSID and password in `config/hostapd.conf`
 
 Optionally you may also edit IPs in `config/interfaces` and `config/dnsmasq.conf`
 
-## 4. Run script
+## 5. Config openvpn
+
+Put your openvpn server conf in `config/openvpn-server.conf`
+
+Put your username and password in `config/openvpn-server.auth`
+
+
+## 6. Run script
 
     $ sh start.sh
 
